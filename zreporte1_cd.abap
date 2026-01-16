@@ -1,15 +1,8 @@
-*&---------------------------------------------------------------------*
-*& Include          ZREPORTE1_CD
-*&---------------------------------------------------------------------*
-* Class definition for ZREPORTE1
-*&-----------------------------------------------------------------------&*
-
-*&-----------------------------------------------------------------------&*
-CLASS lcl_reporte1 DEFINITION.
+CLASS lcl_flight_report DEFINITION.
   PUBLIC SECTION.
     METHODS:
       get_data,
-      mostrar_alv.
+      display_alv.
   PRIVATE SECTION.
 
 ENDCLASS.

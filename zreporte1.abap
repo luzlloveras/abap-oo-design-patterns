@@ -1,39 +1,11 @@
-*&---------------------------------------------------------------------*
-*& Report zreporte1
-*&---------------------------------------------------------------------*
-*&
-*&---------------------------------------------------------------------*
 REPORT zreporte1.
-***************************** MAIN PROGRAM ********************************
-*&-----------------------------------------------------------------------&*
-*   Include Declarations
-*&-----------------------------------------------------------------------&*
-INCLUDE: zreporte1_gd, "Global Declarations
-zreporte1_sel, "Selection Screen
-zreporte1_cd,  "Class Definition
-zreporte1_ci.  "Class Implementation
 
-*&-----------------------------------------------------------------------&*
-*   INITIALIZATION Event
-*&-----------------------------------------------------------------------&*
-INITIALIZATION.
+INCLUDE: zreporte1_gd,  "Global declarations
+         zreporte1_sel, "Selection screen
+         zreporte1_cd,  "Class definitions
+         zreporte1_ci.  "Class implementation
 
-*&-----------------------------------------------------------------------&*
-*   AT SELECTION-SCREEN Event
-*&-----------------------------------------------------------------------&*
-AT SELECTION-SCREEN.
-
-*&-----------------------------------------------------------------------&*
-*   START-OF-SELECTION Event
-*&-----------------------------------------------------------------------&*
 START-OF-SELECTION.
-  go_reporte1 = NEW #( ).
-
-  CALL METHOD go_reporte1->get_data.
-  CALL METHOD go_reporte1->mostrar_alv.
-
-
-*&-----------------------------------------------------------------------&*
-*   END-OF-SELECTION Event
-*&-----------------------------------------------------------------------&*
-END-OF-SELECTION.
+  go_flight_report = NEW #( ).
+  go_flight_report->get_data( ).
+  go_flight_report->display_alv( ).

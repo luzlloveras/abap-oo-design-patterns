@@ -1,15 +1,9 @@
-*&---------------------------------------------------------------------*
-*& Include          ZREPORTE1_CI
-*&---------------------------------------------------------------------*
-* Class Implementation for ZREPORTE1
-*&-----------------------------------------------------------------------&*
-
-*&-----------------------------------------------------------------------&*
-DATA go_reporte1  TYPE REF TO lcl_reporte1.
-CLASS lcl_reporte1 IMPLEMENTATION.
+DATA go_flight_report TYPE REF TO lcl_flight_report.
+CLASS lcl_flight_report IMPLEMENTATION.
 
   METHOD get_data.
 
+    "Join carrier, flight schedule, and bookings for report output
     SELECT scarr~carrid, scarr~carrname, scarr~currcode,
     spfli~connid, spfli~countryfr, spfli~cityfrom, spfli~countryto, spfli~cityto,
             sflight~fldate, sflight~price, sflight~planetype, sflight~seatsmax, sflight~seatsocc,
@@ -28,61 +22,46 @@ CLASS lcl_reporte1 IMPLEMENTATION.
 
   ENDMETHOD.
 
-  METHOD mostrar_alv.
-
-*Declaraciones de tipos, estructuras y tablas propias del ALV
-
+  METHOD display_alv.
     TYPE-POOLS: slis.
 
-*Tabla y estructura del catalogo
-    DATA: ti_catalogo TYPE slis_t_fieldcat_alv,
-          st_catalogo TYPE slis_fieldcat_alv,
-*Estructura para la configuracion de la salida
-          st_layout   TYPE slis_layout_alv,
-*Variable con el nombre del programa
-          v_repid     LIKE sy-repid.
+    DATA: lt_fieldcat TYPE slis_t_fieldcat_alv,
+          ls_layout   TYPE slis_layout_alv.
 
-*Armado del catalogo del ALV --------------------- ABAP 740 ----------------------------
+    lt_fieldcat = VALUE #( ( fieldname = 'Carrid' seltext_l = 'Carrier ID' outputlen = '15' )
+                           ( fieldname = 'Carrname' seltext_l = 'Carrier' outputlen = '15' )
+                           ( fieldname = 'Currcode' seltext_l = 'Currency' outputlen = '15' )
+                           ( fieldname = 'Connid' seltext_l = 'Connection' outputlen = '15' )
+                           ( fieldname = 'Countryfr' seltext_l = 'From Country' outputlen = '15' )
+                           ( fieldname = 'Cityfrom' seltext_l = 'From City' outputlen = '15' )
+                           ( fieldname = 'Countryto' seltext_l = 'To Country' outputlen = '15' )
+                           ( fieldname = 'Cityto' seltext_l = 'To City' outputlen = '15' )
+                           ( fieldname = 'Fldate' seltext_l = 'Flight Date' outputlen = '15' )
+                           ( fieldname = 'Price' seltext_l = 'Price' outputlen = '15' )
+                           ( fieldname = 'Planetype' seltext_l = 'Aircraft' outputlen = '15' )
+                           ( fieldname = 'Seatsmax' seltext_l = 'Seats Max' outputlen = '15' )
+                           ( fieldname = 'Seatsocc' seltext_l = 'Seats Occ' outputlen = '15' )
+                           ( fieldname = 'Bookid' seltext_l = 'Booking ID' outputlen = '15' )
+                           ( fieldname = 'Customid' seltext_l = 'Customer ID' outputlen = '15' )
+                           ( fieldname = 'Custtype' seltext_l = 'Customer Type' outputlen = '15' )
+                           ( fieldname = 'Smoker' seltext_l = 'Smoker' outputlen = '15' )
+                           ( fieldname = 'Luggweight' seltext_l = 'Luggage Weight' outputlen = '15' ) ).
 
-    ti_catalogo = VALUE #( ( fieldname = 'Carrid' seltext_l = 'Carrid' outputlen = '15' )
-    ( fieldname = 'Carrname' seltext_l = 'Carrname' outputlen = '15' )
-    ( fieldname = 'Currcode' seltext_l = 'Currcode' outputlen = '15' )
-    ( fieldname = 'Connid' seltext_l = 'Connid' outputlen = '15' )
-    ( fieldname = 'Countryfr' seltext_l = 'Countryfr' outputlen = '15' )
-    ( fieldname = 'Cityfrom' seltext_l = 'Cityfrom' outputlen = '15' )
-    ( fieldname = 'Countryto' seltext_l = 'Countryto' outputlen = '15' )
-    ( fieldname = 'Cityto' seltext_l = 'Cityto' outputlen = '15' )
-    ( fieldname = 'Fldate' seltext_l = 'Fldate' outputlen = '15' )
-    ( fieldname = 'Price' seltext_l = 'Price' outputlen = '15' )
-    ( fieldname = 'Planetype' seltext_l = 'Planetype' outputlen = '15' )
-    ( fieldname = 'Seatsmax' seltext_l = 'Seatsmax' outputlen = '15' )
-    ( fieldname = 'Seatsocc' seltext_l = 'Seatsocc' outputlen = '15' )
-    ( fieldname = 'Bookid' seltext_l = 'Bookid' outputlen = '15' )
-    ( fieldname = 'Customid' seltext_l = 'Customid' outputlen = '15' )
-    ( fieldname = 'Custtype' seltext_l = 'Custtype' outputlen = '15' )
-    ( fieldname = 'Smoker' seltext_l = 'Smoker' outputlen = '15' )
-    ( fieldname = 'Luggweight' seltext_l = 'Luggweight' outputlen = '15' ) ).
-
-*Configuracion de la salida del ALV
-    CLEAR st_layout.
-    st_layout-zebra = abap_true. "Rayado de lineas
-    st_layout-colwidth_optimize = abap_true.
-
-
-*Ejecucion de la funcion del ALV
+    CLEAR ls_layout.
+    ls_layout-zebra = abap_true.
+    ls_layout-colwidth_optimize = abap_true.
 
     CALL FUNCTION 'REUSE_ALV_GRID_DISPLAY'
       EXPORTING
         i_callback_program = sy-repid
-        is_layout          = st_layout "slis_layout_alv
-        it_fieldcat        = ti_catalogo "slis_t_fieldcat_alv
+        is_layout          = ls_layout
+        it_fieldcat        = lt_fieldcat
       TABLES
         t_outtab           = gt_alv
       EXCEPTIONS
         program_error      = 1
         OTHERS             = 2.
     IF sy-subrc <> 0.
-* Implement suitable error handling here
     ENDIF.
 
   ENDMETHOD.
