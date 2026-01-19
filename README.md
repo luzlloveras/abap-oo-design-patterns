@@ -1,27 +1,51 @@
-# ABAP OO Design Patterns for a Backend Flow
+# ABAP Object-Oriented Design Patterns
 
-This repository shows ABAP OO design patterns applied to a realistic backend flow. It focuses on small, composable classes with clear responsibilities, illustrating how classic ABAP can be structured for maintainability without changing standard behavior.
+This repository demonstrates how object-oriented design patterns are applied in ABAP to solve realistic enterprise backend problems.
 
-## What this repository demonstrates
-- OO design principles applied in ABAP backend flows
-- Encapsulation and separation of concerns
-- Maintainable class design with focused responsibilities
-- Enterprise-style flow orchestration without external dependencies
+The main focus is a Supplier Approval Flow that models validation, decision-making, and state transitions using well-known OO patterns such as Factory and Strategy. The goal is to show how these patterns improve maintainability, extensibility, and separation of concerns in real ABAP applications.
 
-## Supplier Approval Flow
-The main example models a supplier onboarding decision flow with explicit input, strategy selection, and a clear success/error result. A factory resolves the validation strategy based on status, and the flow returns the next status when validation succeeds. The orchestration stays in one place, while strategies remain small and focused. See `zsupplier_approval_flow.abap` for the implementation.
+---
 
-## Tests
-Run ABAP Unit for `zsupplier_approval_flow` from ADT or SE38.
-Tests require access to an ABAP system.
+## Example Use Case: Supplier Approval Flow
 
-## Usage snippets
-- `docs/usage_snippets.abap`
+The Supplier Approval Flow represents a common enterprise backend scenario where supplier data must be validated and approved before becoming active.
 
-## Additional report example (ALV)
-ZREPORTE1 remains in the repository as a classic ALV report with separated includes for declarations, selection, and implementation. It is included as an additional example alongside the main flow.
+This example demonstrates:
+- Selection of validation behavior using the Strategy pattern
+- Controlled object creation through a Factory
+- Clear separation between orchestration logic and domain rules
+- Deterministic handling of valid and invalid state transitions
 
-How to run:
-1) Create report `ZREPORTE1` with includes `zreporte1_gd`, `zreporte1_sel`, `zreporte1_cd`, `zreporte1_ci`.
-2) Activate and execute from SE38/SA38 (or ADT).
-3) Provide a valid carrier name in `p_name` (for demo data, try `Lufthansa`).
+The flow is implemented end-to-end using ABAP Objects, without external dependencies.
+
+---
+
+## Design Patterns Applied
+
+The repository focuses on applying patterns with a clear purpose, not as isolated examples.
+
+Patterns used include:
+- **Factory** for encapsulating object creation based on context
+- **Strategy** for switching validation logic at runtime
+- **Interfaces** to decouple orchestration from concrete implementations
+
+Each pattern is applied to solve a concrete problem in the approval flow.
+
+---
+
+## Testing
+
+The Supplier Approval Flow is covered with **ABAP Unit tests** to validate:
+- Valid approval scenarios
+- Invalid transitions and error handling
+- Correct strategy selection
+
+Tests are isolated and do not rely on external systems.
+
+---
+
+## Usage Snippets
+
+Short usage examples are provided to show how the flow is consumed from ABAP code.
+
+See:
