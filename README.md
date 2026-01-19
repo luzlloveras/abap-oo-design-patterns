@@ -46,6 +46,6 @@ Tests are isolated and do not rely on external systems.
 
 ## Usage Snippets
 
-Short usage examples are provided to show how the flow is consumed from ABAP code.
+Short usage examples show how the approval flow is consumed from ABAP code.
 
-See:
+The snippets demonstrate instantiation of the approval flow, execution of validations, and handling of success and error results. They are located in the `docs/usage_snippets.abap` file.
