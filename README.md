@@ -23,6 +23,7 @@ p_name = Lufthansa
 
 ## Tests
 Run ABAP Unit for `zsupplier_approval_flow` from ADT or SE38.
+Tests require access to an ABAP system.
 
 ## Usage snippets
 - `docs/usage_snippets.abap`
