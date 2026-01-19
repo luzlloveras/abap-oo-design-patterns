@@ -17,3 +17,12 @@ Example input:
 ```
 p_name = Lufthansa
 ```
+
+## Example use case
+- `zsupplier_approval_flow.abap`
+
+## Tests
+Run ABAP Unit for `zsupplier_approval_flow` from ADT or SE38.
+
+## Usage snippets
+- `docs/usage_snippets.abap`
