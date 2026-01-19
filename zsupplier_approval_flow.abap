@@ -102,3 +102,5 @@ CLASS lcl_supplier_flow IMPLEMENTATION.
     rs_result = lo_strategy->validate( is_input ).
   ENDMETHOD.
 ENDCLASS.
+
+INCLUDE zsupplier_approval_flow_test.
